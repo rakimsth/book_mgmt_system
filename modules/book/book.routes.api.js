@@ -19,6 +19,14 @@ router.post("/", (req, res, next) => {
     .catch(e => next(e));
 });
 
+//get the specific book details
+router.get("/:id", (req, res, next) => {
+  console.log(req.params.id);
+  BookController.getById(req.params.id)
+    .then(d => res.json(d))
+    .catch(e => next(e));
+});
+
 //Update the existing book details
 router.put("/:id", (req, res, next) => {
   BookController.update(req.params.id, req.body)

@@ -13,8 +13,8 @@ class Book {
   }
 
   //get specific data from database
-  getById(id) {
-    return BookModel.findOne({ _id: id });
+  async getById(id) {
+    return await BookModel.findOne({ _id: id });
   }
 
   //update the specific data
