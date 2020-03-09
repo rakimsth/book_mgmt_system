@@ -13,24 +13,12 @@
   </head>
   <body>
     <!--navbar goes here-->
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Book Mgmt System</a>
-        </div>
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="/add">Add Book</a></li>
-          <li><a href="#">Admin</a></li>
-          <li><a href="#">Support</a></li>
-        </ul>
-      </div>
-    </nav>
+    <% include ../_layouts/navbar.ejs%>
     <div class="container">
       <div class="row">
         <% if(bookList.length>0) {bookList.forEach(function(book) { %>
         <div class="card col-md-4" style="margin-bottom:2%">
-          <img src="<%=book.img_url%>" class="card-img-top" width="80%" height="50%" />
+          <img src="<%=book.img_url%>" class="card-img-top" width="80%" height="300" />
           <div class="card-body">
             <h5 class="card-title"><strong>Title:</strong> <%=book.name%></h5>
             <h5 class="card-title"><strong>Pages:</strong> <%=book.pages%></h5>
