@@ -5,6 +5,8 @@ const BookSchema = mongoose.Schema(
     //properties
     name: { type: String, required: true },
     pages: String,
+    desc: String,
+    img_url: String,
     author: { type: String }
   },
   {

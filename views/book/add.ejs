@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= title%></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+  />
+  <style>
+    div.form{
+      display: block;
+    text-align: center;
+    }
+  </style>
+  </head>
+  <body>
+    <!--navbar goes here-->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Book Mgmt System</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/add">Add Book</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!--Add books-->
+    <h2 class="text-center">Book Inventory</h2>
+    <div class="container form">
+      <form style="display: inline-block; width:30%;">
+        <div class="form-group">
+          <label for="email">Book Name:</label>
+          <input type="text" class="form-control" name="name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Book Pages:</label>
+          <input type="text" class="form-control" name="pages" />
+        </div>
+        <div class="form-group">
+          <label for="email">Book Desc:</label>
+          <input type="text" class="form-control" name="desc" />
+        </div>
+        <div class="form-group">
+          <label for="email">Book Image Url:</label>
+          <input type="url" class="form-control" name="img_url" />
+        </div>
+        <div class="form-group">
+          <label for="email">Book Author:</label>
+          <input type="text" class="form-control" name="author" />
+        </div>
+        <button type="submit" class="btn btn-default">
+          Submit
+        </button>
+      </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+$( "form" ).submit(function( event ) {
+  let formData = $( this ).serializeArray();
+  let data = {};
+  for(let d of formData){
+    let key = d.name;
+    let value = d.value;
+    data[key]= value;
+  }
+  $.ajax({
+          url: "/api/v1/book/",
+          method: "POST",
+          data
+        }).done(function() {
+          alert("Successfully Added");
+          location.reload(true);
+        });
+  event.preventDefault();
+});
+    </script>
+  </body>
+</html>

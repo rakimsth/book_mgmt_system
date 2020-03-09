@@ -21,7 +21,6 @@ router.post("/", (req, res, next) => {
 
 //get the specific book details
 router.get("/:id", (req, res, next) => {
-  console.log(req.params.id);
   BookController.getById(req.params.id)
     .then(d => res.json(d))
     .catch(e => next(e));

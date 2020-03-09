@@ -3,12 +3,14 @@ const BookModel = require("./book.model");
 class Book {
   constructor() {}
   // list all the datas from database
-  list() {
-    return BookModel.find();
+  async list() {
+    return await BookModel.find();
   }
 
   //add data to the database
   create(payload) {
+    if (!payload.img_url)
+      payload.img_url = "https://disruptivetechasean.com/wp-content/themes/bcp/img/no-image.png";
     return BookModel.create(payload);
   }
 
@@ -19,9 +21,17 @@ class Book {
 
   //update the specific data
   update(id, payload) {
-    return BookModel.findOneAndUpdate(
+    return BookModel.updateOne(
       { _id: id },
-      { $set: { name: payload.name, pages: payload.pages, author: payload.author } }
+      {
+        $set: {
+          name: payload.name,
+          pages: payload.pages,
+          author: payload.author,
+          desc: payload.desc,
+          img_url: payload.img_url
+        }
+      }
     );
   }
 

@@ -3,57 +3,70 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title><%= title%></title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
     />
   </head>
   <body>
+    <!--navbar goes here-->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Book Mgmt System</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/add">Add Book</a></li>
+          <li><a href="#">Admin</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+    </nav>
     <div class="container">
-      <h2 class="text-center">Book Inventory</h2>
-      <form method="post" action="/api/v1/book">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Book Name</label>
-          <input
-            type="text"
-            class="form-control"
-            name="name"
-            aria-describedby="emailHelp"
-            placeholder="Enter Book Name"
-          />
+      <div class="row">
+        <% if(bookList.length>0) {bookList.forEach(function(book) { %>
+        <div class="card col-md-4" style="margin-bottom:2%">
+          <img src="<%=book.img_url%>" class="card-img-top" width="80%" height="50%" />
+          <div class="card-body">
+            <h5 class="card-title"><strong>Title:</strong> <%=book.name%></h5>
+            <h5 class="card-title"><strong>Pages:</strong> <%=book.pages%></h5>
+            <h5 class="card-title"><strong>Author:</strong> <%=book.author%></h5>
+            <p class="card-text"><strong>Desc:</strong> <%=book.desc%></p>
+            <a href="/book/<%=book._id%>" class="btn btn-primary">Edit</a>
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="rmvId"
+              value="<%=book._id%>"
+              onclick="remove(this)"
+            >
+              Delete
+            </button>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Book Pages</label>
-          <input
-            type="text"
-            class="form-control"
-            name="pages"
-            aria-describedby="emailHelp"
-            placeholder="Enter Pages"
-          />
+        <% });} else{ %>
+        <div class="alert alert-warning text-center" role="alert">
+          <strong>Warning!</strong> No Book in the System.
         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Author</label>
-          <input
-            type="text"
-            class="form-control"
-            name="author"
-            aria-describedby="emailHelp"
-            placeholder="Enter Author"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+        <% } %>
+      </div>
     </div>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      function remove(data) {
+        var id = $(data).val();
+        $.ajax({
+          url: "/api/v1/book/" + id,
+          method: "DELETE"
+        }).done(function() {
+          alert("Successfully Deleted");
+          location.reload(true);
+        });
+      }
+    </script>
   </body>
 </html>
